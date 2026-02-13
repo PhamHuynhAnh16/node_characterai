@@ -68,7 +68,7 @@ If you like this project, please check their [website](https://character.ai/).
 ## Installation
 
 ```bash
-npm install node_characterai@beta
+npm install PhamHuynhAnh16/node_characterai#2.0
 ```
 ***Note: This is temporary until the stable version is out.***
 
@@ -180,6 +180,31 @@ const dm = await character.DM();
 
 // send it a message
 const message = await dm.sendMessage("test");
+
+// get the text content
+const content = message.content;
+
+console.log(content);
+```
+
+### Image usage
+
+Chatting with `node_characterai` is pretty straightforward and is inspired by how you would actually do it on the app or the website.
+
+```typescript
+// get your character
+const character = await characterAI.fetchCharacter(characterId);
+
+// dm it
+// use `await character.DM(chatId);` instead if you got a specific conversation in mind you wish to use.
+const dm = await character.DM(); 
+
+// upload image (For safety, please use images under 5MB.)
+// Images can be used via Paths, Urls, Blobs, and Buffers.
+const image = await characterAI.UploadImage("/path/to/file.png") 
+
+// send it a message
+const message = await dm.sendMessage("test", image);
 
 // get the text content
 const content = message.content;
