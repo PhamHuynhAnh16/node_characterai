@@ -39,8 +39,8 @@ export class CAIWebsocket extends EventEmitter {
     private userId = 0;
     private websocket?: WebSocket = undefined;
     
-    private _connected = false;
-    public get connected() { return this._connected; }
+    // private _connected = false;
+    // public get connected() { return this._connected; }
 
     async open(withCheck: boolean): Promise<CAIWebsocket> {
         return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ export class CAIWebsocket extends EventEmitter {
             websocket.once('open', () => {
                 if (!withCheck) {
                     this.emit("connected");
-                    this._connected = true;
+                    // this._connected = true;
                     resolve(this);
                     return;
                 }
@@ -64,7 +64,7 @@ export class CAIWebsocket extends EventEmitter {
             websocket.once('error', error => reject(error.message));
             websocket.on('close', () => {
                 this.emit("disconnected");
-                this._connected = false;
+                // this._connected = false;
             });
 
             websocket.on('message', async data => {
@@ -96,8 +96,9 @@ export class CAIWebsocket extends EventEmitter {
             let streamedMessage: any[] | undefined = options.streaming ? [] : undefined;
             let turn: any;
             
-            const eventMethod = options.streaming ? "on" : "once";
-            (this as any)[eventMethod]("rawMessage", async function handler(this: CAIWebsocket, message: string | any) {
+            // const eventMethod = options.streaming ? "on" : "once";
+            // (this as any)[eventMethod]("rawMessage", async function handler(this: CAIWebsocket, message: string | any) {
+            this.on("rawMessage", async function handler(this: CAIWebsocket, message: string | any) {
                 if (options.parseJSON)
                     message = await Parser.parseJSON(message, false);
                 else {

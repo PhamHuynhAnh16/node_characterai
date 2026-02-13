@@ -11,10 +11,12 @@ const generateBaseMessagePayload = (
     username: string, // our username
     attachments: string,
 ) => { return {
-    attachments: [{ 
-        "type": "TYPE_IMAGE", 
-        "url": attachments 
-    }],
+    attachments: attachments
+        ? [{
+            type: "TYPE_IMAGE",
+            url: attachments
+            }]
+        : null,
     character_id: characterId,
     selected_language: "",
     tts_enabled: false,

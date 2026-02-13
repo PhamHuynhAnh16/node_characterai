@@ -188,7 +188,7 @@ export class Conversation extends Specable {
         this.processingMessages = [];
         this.messageIds = [];
 
-        this.client.markChatAsActive(this);
+        // this.client.markChatAsActive(this);
 
         const messages = await this.fetchMessagesViaQuery(false);
         for (let i = 0; i < messages.length; i++)
