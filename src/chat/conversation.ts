@@ -201,7 +201,7 @@ export class Conversation extends Specable {
         this.cachedMessages = this.processingMessages;
         this.frozen = false;
     }
-    async sendMessage(content: string, options?: ICAIMessageSending): Promise<CAIMessage> {
+    async sendMessage(content: string, attachments: string, options?: ICAIMessageSending): Promise<CAIMessage> {
         // DO NOT touch this. This is abstract/virtual behavior for higher level conversations (DM/Group)
         return new CAIMessage(this.client, this, {});
     }

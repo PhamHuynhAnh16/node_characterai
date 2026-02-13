@@ -101,7 +101,8 @@ export class CAIImage extends Specable {
         if (!this.sharpImage) throw new Error("Image not available or not loaded");
 
         const buffer = await this.sharpImage.toBuffer();
-        const file = new File([buffer], "image.png", { type: "image/png" });
+        const uint8 = new Uint8Array(buffer);
+        const file = new File([uint8], "image.png", { type: "image/png" });
         
         // character ai deserves an award for the most batshit confusing endpoints to upload stuff ever
         const uploadRequest = await this.client.requester.request("https://beta.character.ai/chat/upload-image/", {

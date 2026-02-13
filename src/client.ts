@@ -16,6 +16,7 @@ import { Specable } from './utils/specable';
 import { Persona } from './profile/persona';
 import NodeCache from 'node-cache';
 import { Conversation } from './chat/conversation';
+import { uploadImage, UploadInput } from "./upload"
 
 const fallbackEdgeRollout = '60';
 
@@ -500,7 +501,9 @@ export class CharacterAI {
         const personaOverrides = await settings.fetchPersonaOverrides();
         return personaOverrides[characterId];
     }
-
+    async UploadImage(input: UploadInput) {
+        return uploadImage(this.token, input)
+    }
     // authentication
     async authenticate(sessionToken: string) {
         this.checkAndThrow(CheckAndThrow.RequiresNoAuthentication);

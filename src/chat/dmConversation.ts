@@ -9,7 +9,12 @@ import { v4 as uuidv4 } from 'uuid';
 const generateBaseMessagePayload = (
     characterId: string,
     username: string, // our username
+    attachments: string,
 ) => { return {
+    attachments: [{ 
+        "type": "TYPE_IMAGE", 
+        "url": attachments 
+    }],
     character_id: characterId,
     selected_language: "",
     tts_enabled: false,
@@ -42,13 +47,14 @@ const generateBaseMessagePayload = (
 
 const generateBaseSendingPayload = (
     message: string,
+    attachments: string,
     characterId: string,
     username: string, // our username
     turnId: string,
     chatId: string,
     userId: number,
     imageUrl?: string
-) => { return {...generateBaseMessagePayload(characterId, username),
+) => { return {...generateBaseMessagePayload(characterId, username, attachments),
     num_candidates: 1,
     turn: {
         turn_key: { turn_id: turnId, chat_id: chatId },
@@ -66,8 +72,9 @@ const generateBaseRegeneratingPayload = (
     characterId: string,
     turnId: string,
     username: string, // our username
-    chatId: string
-) => { return {...generateBaseMessagePayload(characterId, username),
+    chatId: string,
+    attachments: string
+) => { return {...generateBaseMessagePayload(characterId, username, attachments),
     turn_key: { turn_id: turnId, chat_id: chatId },
 }};
 
@@ -138,7 +145,7 @@ export default class DMConversation extends Conversation {
         return await this.client.connectToCall(call, options);
     }
 
-    async sendMessage(content: string, options?: ICAIMessageSending): Promise<CAIMessage> {
+    async sendMessage(content: string, attachments: string, options?: ICAIMessageSending): Promise<CAIMessage> {
         this.client.checkAndThrow(CheckAndThrow.RequiresAuthentication);
 
         if (this.frozen)
@@ -152,6 +159,7 @@ export default class DMConversation extends Conversation {
             streaming: false,
             payload: generateBaseSendingPayload(
                 content,
+                attachments,
                 this.characterId,
                 this.client.myProfile.username,
                 uuidv4(),
@@ -177,7 +185,8 @@ export default class DMConversation extends Conversation {
                 this.characterId,
                 message.turnId,
                 this.client.myProfile.username,
-                this.chatId
+                this.chatId,
+                "",
             )
         });
         

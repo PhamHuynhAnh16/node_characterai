@@ -4,7 +4,7 @@ import { EventEmitterSpecable, hiddenProperty } from "../utils/specable";
 import { PassThrough } from "stream";
 import { AudioFrame, AudioSource, AudioStream, LocalAudioTrack, RemoteTrack, Room, TrackKind, TrackPublishOptions, TrackSource } from '@livekit/rtc-node';
 import path from "path";
-import { DisconnectReason } from "@livekit/rtc-node/dist/proto/room_pb";
+import { DisconnectReason } from "@livekit/rtc-node";
 import DMConversation from "../chat/dmConversation";
 import fs from 'fs';
 import AudioInterface from "./audioInterface";
